@@ -27,7 +27,11 @@ class ApiForm extends Component {
     let self = this;
 
     if (!this.state.network_id || !this.state.network_token) {
-      console.log('Please fill network_id and network_token!');
+      this.setState(Object.assign({},
+        this.state,
+        {api_response: 'Please fill network_id and network_token!'}
+      ));
+
       return false;
     }
 
@@ -39,10 +43,12 @@ class ApiForm extends Component {
 
         if (response.data.response.errors && response.data.response.errors.publicMessage) {
           res = response.data.response.errors.publicMessage;
+        } else if (response.data.response.errors && response.data.response.errorMessage) {
+          res = response.data.response.errorMessage;        
         } else if (response.data.response.data.length > 0) {
           res = response.data.response.data
         } else {
-          res = 'No  api keys found';
+          res = 'No api keys found';
         }
         
         self.setState(Object.assign({},
@@ -57,9 +63,13 @@ class ApiForm extends Component {
 
   render() {
     return (
-      <Row>
-        <Col s={6}>
-          <h5>HasOffers API fetchApiKeys method implementation</h5>
+      <Row style={{margin: '100px'}}>
+        <Col s={4} offset='s4'>
+          <Row>
+            <Col>
+              <h5>HasOffers API fetchApiKeys method implementation</h5>
+            </Col>
+          </Row>
 
           <Input
             s={12}
@@ -99,10 +109,12 @@ class ApiForm extends Component {
               </Button>
             </Col>
           </Row>
-          
-          <div className="api_reponse">
-            {this.state.api_response}
-          </div>
+
+          <Row>
+            <Col>
+              {this.state.api_response}
+            </Col>
+          </Row>
         </Col>
       </Row>
     );

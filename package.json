@@ -4,8 +4,10 @@
   "private": true,
   "dependencies": {
     "axios": "^0.16.2",
+    "normalize.css": "^7.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-materialize": "^1.0.10",
     "react-scripts": "1.0.12"
   },
   "scripts": {
