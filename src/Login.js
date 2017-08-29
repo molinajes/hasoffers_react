@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ApiForm from './ApiForm.js';
-import {Button, Input, Row, Col, Preloader, Icon} from 'react-materialize';
+import Signup from './Signup.js';
+import {Button, Input, Row, Col, Preloader} from 'react-materialize';
 import './App.css';
 
 class Login extends Component {
@@ -24,11 +25,11 @@ class Login extends Component {
     ));
   }
 
-  countdown() {
+  countdown(x) {
     this.setState(Object.assign({},
         this.state,
         {
-            isAuthenticated: this.state.isAuthenticated + 1
+            isAuthenticated: x
         }
     ))
   }
@@ -91,9 +92,16 @@ class Login extends Component {
                     
                     <Row>
                         <Col>
-                        <Button waves='light' onClick={() => this.handleSubmit()}>
-                            Login
-                        </Button>
+                            <Button waves='light' onClick={() => this.handleSubmit()}>
+                                Login
+                            </Button>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col>
+                            Don't have account?
+                            <span style={{color: '#039be5', textDecoration: 'none', cursor: 'pointer'}} onClick={() => this.countdown(-1)}> Register</span>
                         </Col>
                     </Row>
                     
@@ -106,13 +114,12 @@ class Login extends Component {
             </Row>
         );
     } else if (this.state.isAuthenticated === 1) {
-        setTimeout(() => this.countdown(), 3000);
+        setTimeout(() => this.countdown(2), 3000);
 
         return (
             <div style={{
                 width: '100px',
                 height: '100px',
-                marginLeft: '-50%',
                 position: 'absolute',
                 top:0,
                 bottom: 0,
@@ -124,13 +131,12 @@ class Login extends Component {
             </div>
         );
     } else if (this.state.isAuthenticated === 2) {
-        setTimeout(() => this.countdown(), 1500);
+        setTimeout(() => this.countdown(3), 1500);
 
         return (
             <div style={{
-                width: '100px',
-                height: '100px',
-                marginLeft: '-50%',
+                width: '300px',
+                height: '50px',
                 position: 'absolute',
                 top:0,
                 bottom: 0,
@@ -138,12 +144,16 @@ class Login extends Component {
                 right: 0,
                 margin: 'auto',
             }}>
-		        <h5>Success!</h5>
+		        <h5>Success! You've made it...</h5>
             </div>
         );
     } else if (this.state.isAuthenticated === 3) {
         return (
             <ApiForm />
+        );
+    } else if (this.state.isAuthenticated === -1) {
+        return (
+            <Signup onSubmit={() => this.countdown(0)} />
         );
     }
   }
